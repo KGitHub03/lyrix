@@ -1,0 +1,136 @@
+{% extends "songs_lyrics/layout.html" %}
+
+{% block body %}
+
+    <script>
+        let taal = [
+            {"name":"Addha Teentaal 30 bpm G#","type":"Addha","code":"M6JfSC0L1EM"},
+            {"name":"Addha Teentaal 35 bpm G#","type":"Addha","code":"TwfwAS-H8q8"},
+            {"name":"Addha Teentaal 40 bpm G#","type":"Addha","code":"Iw_sE5s7vrU"},
+            {"name":"Addha Teentaal 45 bpm G#","type":"Addha","code":"4_0NDZU5AnQ"},
+            {"name":"Addha Teentaal 50 bpm G#","type":"Addha","code":"LeP1W3LjcxE"},
+            {"name":"Addha Teentaal 55 bpm G#","type":"Addha","code":"qHeInGAvc60"},
+            {"name":"Addha Teentaal 60 bpm G#","type":"Addha","code":"G1GRBAammps"},
+            {"name":"Addha Teentaal 65 bpm G#","type":"Addha","code":"0pxbpxmem9U"},
+            {"name":"Addha Teentaal 70 bpm G#","type":"Addha","code":"WvZBPni6EXo"},
+
+            {"name":"Bhajni 40 bpm C#","type":"Bhajani","code":"pRV4m4RLP_Q"},
+            {"name":"Bhajni 50 bpm C#","type":"Bhajani","code":"PvTvsZ0sDVk"},
+            {"name":"Bhajni 60 bpm C#","type":"Bhajani","code":"-Tfa82eTPgI"},
+            {"name":"Bhajni 70 bpm C#","type":"Bhajani","code":"JyU9kJxeJ5Y"},
+            {"name":"Bhajni 80 bpm C#","type":"Bhajani","code":"v5tjJyRPuaE"},
+            {"name":"Bhajni 90 bpm C#","type":"Bhajani","code":"-rXGOnqvQeI"},
+            {"name":"Bhajni 100 bpm C#","type":"Bhajani","code":"Xnh5iKf20kY"},
+            {"name":"Bhajni 110 bpm C#","type":"Bhajani","code":"NQ8-seLlP9o"},
+            {"name":"Bhajni 120 bpm C#","type":"Bhajani","code":"sR9ZRJstadk"},
+            {"name":"Bhajni (Pakhwaj) 60 bpm C#","type":"Bhajani","code":"oRlPi1i6Pqs"},
+            {"name":"Bhajni (Pakhwaj) 70 bpm C#","type":"Bhajani","code":"romdjkgINGw"},
+            {"name":"Bhajni (Pakhwaj) 80 bpm C#","type":"Bhajani","code":"vZRkbhHQT2U"},
+            {"name":"Bhajni (Pakhwaj) 90 bpm C#","type":"Bhajani","code":"b0ZAClQr7xk"},
+            {"name":"Bhajni (Pakhwaj) 100 bpm C#","type":"Bhajani","code":"j6ZOV3u_Rz8"},
+            {"name":"Bhajni (Pakhwaj) 110 bpm C#","type":"Bhajani","code":"C1w8I__2Z4Q"},
+            {"name":"Bhajni (Pakhwaj) 120 bpm C#","type":"Bhajani","code":"P1sI9rZlwG0"},
+
+            {"name":"Chautaal (Pakhwaj) 20 bpm C# ","type":"Chautaal","code":"uBmia-wMcOs"},
+            {"name":"Chautaal (Pakhwaj) 30 bpm C# ","type":"Chautaal","code":"h6AwZW8Py0M"},
+            {"name":"Chautaal (Pakhwaj) 40 bpm C# ","type":"Chautaal","code":"tft7wJ2MY6Y"},
+            {"name":"Chautaal (Pakhwaj) 50 bpm C# ","type":"Chautaal","code":"ew-NKN-AsR4"},
+            {"name":"Chautaal (Pakhwaj) 60 bpm C# ","type":"Chautaal","code":"5ZAIBoVJRt4"},
+            {"name":"Chautaal (Pakhwaj) 70 bpm C# ","type":"Chautaal","code":"eiCVhB394lY"},
+            {"name":"Chautaal (Pakhwaj) 80 bpm C# ","type":"Chautaal","code":"alpAaj-37qQ"},
+
+            {"name":"Dadra 70 bpm C#","type":"Dadra","code":"6NQYKIxAVGU"},
+            {"name":"Dadra 70 bpm G#","type":"Dadra","code":"_TJBQBd0hco"},
+
+            {"name":"Ek Taal 50 bpm C#","type":"Ek Taal","code":"_nz1ufFFvWg"},
+            {"name":"Ek Taal 60 bpm C#","type":"Ek Taal","code":"XD7VKI7haks"},
+            {"name":"Ek Taal 70 bpm C#","type":"Ek Taal","code":"3VJhyvxpJIg"},
+            {"name":"Ek Taal 120 bpm C#","type":"Ek Taal","code":"d6v3a9OoAUc"},
+
+            {"name":"Rupak 60 bpm C#","type":"Rupak","code":"SrnOmmAVnzE"},
+            {"name":"Rupak 70 bpm C#","type":"Rupak","code":"kZJ7zh-32nI"},
+            {"name":"Rupak 80 bpm C#","type":"Rupak","code":"jFFsOoHZrBI"},
+            {"name":"Rupak 90 bpm C#","type":"Rupak","code":"UKxaUZgE-Zw"},
+            {"name":"Rupak 100 bpm C#","type":"Rupak","code":"hpEq5m6Fptg"},
+            {"name":"Rupak 110 bpm C#","type":"Rupak","code":"4Uwlqga0OLc"},
+            {"name":"Rupak 120 bpm C#","type":"Rupak","code":"Op2U12qhJ2k"},
+
+            {"name":"Teem Taal 20 bpm C#","type":"Teen Taal","code":"owdzmEnWZ0w"},
+            {"name":"Teem Taal 30 bpm C#","type":"Teen Taal","code":"hMSWFQzwNZs"},
+            {"name":"Teem Taal 40 bpm C#","type":"Teen Taal","code":"_p1HIAUl3Ks"},
+            {"name":"Teem Taal 50 bpm C#","type":"Teen Taal","code":"dqWBR4leUrE"},
+            {"name":"Teem Taal 60 bpm C#","type":"Teen Taal","code":"Q6y4gVuqIa8"},
+            {"name":"Teem Taal 70 bpm C#","type":"Teen Taal","code":"7Dhl4ZAgYN4"},
+            {"name":"Teem Taal 80 bpm C#","type":"Teen Taal","code":"ptMRoRhrlA0"},
+            {"name":"Teem Taal 90 bpm C#","type":"Teen Taal","code":"xWXBqCdb3ek"},
+            {"name":"Teem Taal 100 bpm C#","type":"Teen Taal","code":"gEKsmH7tHkQ"},
+            {"name":"Teem Taal 110 bpm C#","type":"Teen Taal","code":"_udo7xAu3rM"},
+            {"name":"Teem Taal 120 bpm C#","type":"Teen Taal","code":"uAr8_o4CwXo"},
+
+            {"name":"Zaptaal 100 bpm C#","type":"Zaptaal","code":"tmhB-r0ojN4"},
+            {"name":"Zaptaal 90 bpm C#","type":"Zaptaal","code":"zHnVBm2z_oo"},
+            {"name":"Zaptaal 80 bpm C#","type":"Zaptaal","code":"ftDtkTIBapU"},
+            {"name":"Zaptaal 70 bpm C#","type":"Zaptaal","code":"oxE68MgWutI"},
+            {"name":"Zaptaal 60 bpm C#","type":"Zaptaal","code":"cLcwSKZGz74"},
+            {"name":"Zaptaal 50 bpm C#","type":"Zaptaal","code":"h3BoxR4QC5s"},
+            {"name":"Zaptaal 40 bpm C#","type":"Zaptaal","code":"y2C8eoxNSLs"},
+
+        ]
+    </script>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-2">
+                <iframe width="100px" height="100px" style="border: none;" src="https://www.youtube.com/embed/aRR1qOg6yus"></iframe>
+            </div>
+            <div class="col-10">
+                <h1>{{ song.name }}</h1>
+                <h5>{{ song.singer1 }}, {{ song.singer2 }}</h5>
+            </div>
+        </div>
+        <table class="table">
+            <tr>
+                <td><b>Album: </b>{{ song.album }}</td>
+                <td><b>Genre: </b>{{ song.genre }}</td>
+                <td><b>Language: </b>{{ song.language }}</td>
+                <td><b>Taal: </b>{{ song.taal }}</td>
+            </tr>
+            <tr>
+                <td>
+                    <input list="taal-vids" value="{{ song.taal }}" placeholder="Choose Taal" type="text" class="form-control" id="taal-input">
+                </td>
+                <td>
+                    <button onclick="start_vid();" id="play" class="btn btn-primary btn-block">Load</button>
+                </td>
+                <td id="video"></td>
+                <td>
+                    <button disabled onclick="location.reload();" id="stop" class="btn btn-danger btn-block">Stop</button>
+                </td>
+            </tr>
+        </table>
+        <div class="lyrics"></div>
+    </div>
+<datalist id="taal-vids">
+    
+</datalist>
+<script>
+    function start_vid()
+    {
+        for (let i = 0; i < taal.length; i++)
+        {
+            const element = taal[i];
+            if(element.name == document.querySelector('#taal-input').value)
+            {
+                document.querySelector('#video').innerHTML = `<iframe id="vid_iframe" width="100%" height="40px" style="border: none;" src="https://www.youtube.com/embed/${element.code}"></iframe>`;
+            }
+        }
+        document.querySelector('#stop').disabled = false;
+        document.querySelector('#play').disabled = true;
+    }
+    for (let i = 0; i < taal.length; i++)
+    {
+        const element = taal[i];
+        document.querySelector('#taal-vids').innerHTML += `<option value="${element.name}">`;
+    }
+</script>
+{% endblock %}

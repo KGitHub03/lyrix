@@ -1,0 +1,515 @@
+{% extends "songs_lyrics/layout.html" %}
+{% load humanize %}
+
+{% block body %}
+    {% if currentUser.is_authenticated %}
+        <h2>Welcome {{ currentUser.username }}!</h2>
+        <form action="/" method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col">
+                    <table height="100%">
+                        <tr>
+                            <td class="btns text-white">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Songs:&nbsp;&nbsp;</td>
+                            <td class="btns text-white">All&nbsp;&nbsp;</td>
+                            <td class="btns">
+                                <div class="custom-control custom-switch text-white custom-switch-md">
+                                    <input id="darkmode" name="fav" type="checkbox" class="custom-control-input">
+                                    <label class="custom-control-label" for="darkmode">Favourites&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col">
+                    <input autocomplete="off" list="song_titles" placeholder="Song Title" type="text" class="form-control" name="title">
+                </div>
+                <div class="col">
+                    <input autocomplete="off" list="singers" placeholder="Singer" type="text" class="form-control" name="singer">
+                </div>
+                <div class="col">
+                    <input autocomplete="off" list="genres" placeholder="Genre" type="text" class="form-control" name="genre">
+                </div>
+                <div class="col">
+                    <input autocomplete="off" class="btn btn-block btns" value="Load Songs" type="submit">
+                </div>
+            </div>
+        </form>
+        <br>
+        {% if sortlist %}
+        {% else %}
+            Your filter didn't match to any songs. <a href="/add">Add a new song</a> or choose filters again.
+        {% endif %}
+        {% for song in songs %}
+            {% if song.id in sortlist %}
+                <div onclick="location.replace('/{{ song.id }}')" class="song row" style="cursor: pointer;">
+                    <div class="col-1">{{ song.id }}</div>
+                    <div class="col-5">
+                        <a style="font-size: larger;">{{ song.name }}</a>
+                    </div>
+                    <div class="col-4">{{ song.singer1 }}, {{ song.singer2 }}</div>
+                    <div class="col-1">
+                        {% if currentUser in song.favorite.all %}
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/f/f1/Heart_coraz%C3%B3n.svg" alt="" class="home-like">
+                        {% else %}
+                            <img src="https://icon-library.com/images/like-heart-icon/like-heart-icon-24.jpg" alt="" class="home-like">
+                        {% endif %}    
+                    </div>
+                    <div class="col-1">
+                        {% widthratio song.favorite.count users 100 %}%
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <h1 style="font-size: 50px;">Welcome music lovers!</h1>
+        <p class="col-9 desc">Lyrix is developed by Kush Malwatkar as a project for his course of computer programming (CS50) offered by Harvard University of United States. The website lets music lovers create a list of their favorite songs. Everyone can add, watch, and practice singing accompanied by a chosen tabla taal.</p>
+        <a href="/register" class="btn btns">Register</a>
+        <a href="/login" class="btn btns">Log in</a>
+    {% endif %}
+    <div class="songs">
+        
+    </div>
+    <datalist id="song_titles">
+        {% for song in songs %}
+            <option value="{{ song.name }}">
+        {% endfor %}
+    </datalist>
+    <datalist id="langs">
+        <option value="Hindi">
+        <option value="Marathi">
+    </datalist>
+    <datalist id="genres">
+        <option value='Baithak Gana'>
+        <option value='Bhajan'>
+        <option value='Bharatanatyam'>
+        <option value='Bhavageete'>
+        <option value='Bollywood'>
+        <option value='Carnatic music'>
+        <option value='Chaiti'>
+        <option value='Chutney music'>
+        <option value='Dadra'>
+        <option value='Dhamar'>
+        <option value='Dhrupad'>
+        <option value='Filmi'>
+        <option value='Filmi qawwali'>
+        <option value='Gaana'>
+        <option value='Garba'>
+        <option value='Goa trance'>
+        <option value='Hindu music'>
+        <option value='Hindustani classical music'>
+        <option value='Indian blues'>
+        <option value='Indian classical music'>
+        <option value='Indian folk music'>
+        <option value='Indian hip hop'>
+        <option value='Indian pop'>
+        <option value='Indian rock'>
+        <option value='Kajari'>
+        <option value='Kathak'>
+        <option value='Khyal'>
+        <option value='Kuchipudi'>
+        <option value='Mohiniyattam'>
+        <option value='Music in ancient India'>
+        <option value='Music of Bollywood'>
+        <option value='Music of Chakwood'>
+        <option value='Music of India'>
+        <option value='Music of Punjab'>
+        <option value='Music of Uttarakhand'>
+        <option value='Odissi'>
+        <option value='Odissi music'>
+        <option value='Qawwali'>
+        <option value='Rabindra Sangeet'>
+        <option value='Raga'>
+        <option value='Raga rock'>
+        <option value='Sadra'>
+        <option value='Sugama Sangeetha'>
+        <option value='Thumri'>            
+    </datalist>
+    <datalist id="singers">
+        <option value="Aarti Nayak">
+        <option value="Abdul Karim Khan">
+        <option value="Abdul Wahid Khan">
+        <option value="Aishwarya Vidhya Raghunath">
+        <option value="Ajay Pohankar">
+        <option value="Ajit Kadkade">
+        <option value="Akhtar Sadmani">
+        <option value="Alladiya Khan">
+        <option value="Aman Ali Khan">
+        <option value="Amar Nath">
+        <option value="Ambili">
+        <option value="Aminuddin Dagar">
+        <option value="Amiya Tagore">
+        <option value="Amjad Ali Khan">
+        <option value="Amruta Fadnavis">
+        <option value="Anand Bhate">
+        <option value="Anand Thakore">
+        <option value="Anita Singhvi">
+        <option value="Anitha Kuppusamy">
+        <option value="Anitha Shaiq">
+        <option value="Anjali Marathe">
+        <option value="Anjanibai Malpekar">
+        <option value="Anupama Raag">
+        <option value="Anuradha Paudwal">
+        <option value="Anuradha Sriram">
+        <option value="Aparna Panshikar">
+        <option value="Arati Ankalikar-Tikekar">
+        <option value="Ariyakudi Ramanuja Iyengar">
+        <option value="Arshad Ali Khan">
+        <option value="Arun Bhaduri">
+        <option value="Arun Kashalkar">
+        <option value="Asha Bhosle">
+        <option value="Asha Khadilkar">
+        <option value="Ashwini Bhide-Deshpande">
+        <option value="Augustine Joseph">
+        <option value="B. Arundhathi">
+        <option value="B. K. Sumitra">
+        <option value="B. R. Deodhar">
+        <option value="Babanrao Haldankar">
+        <option value="Bade Ghulam Ali Khan">
+        <option value="Balakrishnabuwa Ichalkaranjikar">
+        <option value="Balasaheb Poonchwale">
+        <option value="Ballary M. Raghavendra">
+        <option value="Basavaraj Rajguru">
+        <option value="Bhaiyya Ganpatrao">
+        <option value="Bharati Vaishampayan">
+        <option value="Bhaskarbuwa Bakhale">
+        <option value="Bhaswati Chakraborty">
+        <option value="Bhavana Radhakrishnan">
+        <option value="Bhimsen Joshi">
+        <option value="Bhubaneswari Mishra">
+        <option value="Bhurji Khan">
+        <option value="Biba Singh">
+        <option value="Bombay Jayashri">
+        <option value="Bombay Lakshmi Rajagopalan">
+        <option value="Chaitra H. G.">
+        <option value="Chandrakant Limaye">
+        <option value="Charulatha Mani">
+        <option value="Charumathi Ramachandran">
+        <option value="Chembai">
+        <option value="Chhannulal Mishra">
+        <option value="Chinmayi">
+        <option value="Chittoor Subramaniam Pillai">
+        <option value="D Subbaramaiah">
+        <option value="D. K. Jayaraman">
+        <option value="D. K. Pattammal">
+        <option value="D. V. Paluskar">
+        <option value="Damodar Hota">
+        <option value="Deenanath Mangeshkar">
+        <option value="Devaki Pandit">
+        <option value="Dhondutai Kulkarni">
+        <option value="Dilshad Khan">
+        <option value="Durga Jasraj">
+        <option value="Faiyaz Khan">
+        <option value="Firoz Dastur">
+        <option value="Gajananrao Joshi">
+        <option value="Ganapati Bhat">
+        <option value="Gangubai Hangal">
+        <option value="Garimella Balakrishna Prasad">
+        <option value="Gauhar Jaan">
+        <option value="Gauri Pathare">
+        <option value="Gayathri Venkataraghavan">
+        <option value="Gayatri Asokan">
+        <option value="Geetha Rajashekar">
+        <option value="Geetika Varde">
+        <option value="Ghagge Nazir Khan">
+        <option value="Ghulam Mustafa Khan (singer)">
+        <option value="Ghulam Sadiq Khan">
+        <option value="Girija Devi">
+        <option value="H. Sayeeduddin Dagar">
+        <option value="Haimanti Sukla">
+        <option value="Hari & Sukhmani">
+        <option value="Haricharan">
+        <option value="Hirabai Barodekar">
+        <option value="Hyderabad Brothers">
+        <option value="Inayat Hussain Khan">
+        <option value="Indira Naik">
+        <option value="Indrani Mukherjee (singer)">
+        <option value="Indrani Sen">
+        <option value="J. M. Raju">
+        <option value="Jaddanbai">
+        <option value="Jagdish Prasad">
+        <option value="Jaspinder Narula">
+        <option value="Jasraj">
+        <option value="Jayadevi Jangamshetti">
+        <option value="Jayateerth Mevundi">
+        <option value="Jaymala Shiledar">
+        <option value="Jitendra Abhisheki">
+        <option value="Joseph J. Palackal">
+        <option value="Junior Dagar Brothers">
+        <option value="Juthika Roy">
+        <option value="K. G. Ginde">
+        <option value="K. Omanakutty">
+        <option value="K. P. Brahmanandan">
+        <option value="K. S. Chithra">
+        <option value="K. V. Krishna Prasad">
+        <option value="K. V. Narayanaswamy">
+        <option value="Kaivalya Kumar Gurav">
+        <option value="Kalamandalam Gangadharan">
+        <option value="Kalamandalam Hyderali">
+        <option value="Kalpana Raghavendar">
+        <option value="Kalyani Bondre">
+        <option value="Kalyani Menon">
+        <option value="Kamala Bose">
+        <option value="Kaushiki Chakraborty">
+        <option value="Kavita Paudwal">
+        <option value="Kavita Seth">
+        <option value="Kaviyoor Revamma">
+        <option value="Kavya Ajit">
+        <option value="Kedar Bodas">
+        <option value="Kesarbai Kerkar">
+        <option value="Khadim Hussain Khan">
+        <option value="Kharesma Ravichandran">
+        <option value="Kishori Amonkar">
+        <option value="Konerirajapuram Vaidyanatha Ayyar">
+        <option value="Kottakkal Madhu">
+        <option value="Krishna Chattopadhyay">
+        <option value="Krishnarao Phulambrikar">
+        <option value="Krishnarao Shankar Pandit">
+        <option value="Kumar Gandharva">
+        <option value="Kunnakudi Subbalakshmi">
+        <option value="Lakshmi Shankar">
+        <option value="Lalith J. Rao">
+        <option value="Lata Mangeshkar">
+        <option value="Lavanya Sundararaman">
+        <option value="M. G. Radhakrishnan">
+        <option value="M. G. Venkata Raghavan">
+        <option value="M. K. Thyagaraja Bhagavathar">
+        <option value="M. L. Vasanthakumari">
+        <option value="M. M. Manasi">
+        <option value="M. S. Subbulakshmi">
+        <option value="Madhava Gudi">
+        <option value="Madhup Mudgal">
+        <option value="Madurai N. Krishnan">
+        <option value="Maharajapuram Viswanatha Iyer">
+        <option value="Mahathi">
+        <option value="Malabika Kanan">
+        <option value="Malini Rajurkar">
+        <option value="Mallikarjun Mansur">
+        <option value="Manda Sudharani">
+        <option value="Mani Prasad">
+        <option value="Manik Bhide">
+        <option value="Manik Varma">
+        <option value="Manjapra Mohan">
+        <option value="Manjari (Indian singer)">
+        <option value="Manji Khan">
+        <option value="Manjusha Kulkarni-Patil">
+        <option value="Mashkoor Ali Khan">
+        <option value="Mata Amritanandamayi">
+        <option value="Mavelikkara Prabhakara Varma">
+        <option value="Meeta Pandit">
+        <option value="Megha (singer)">
+        <option value="Melattur Sahadevan">
+        <option value="Mian Ghulam Nabi Shori">
+        <option value="Milind Chittal">
+        <option value="Mitali Banerjee Bhawmik">
+        <option value="Mogubai Kurdikar">
+        <option value="Mooralala Marwada">
+        <option value="Mosa Walsalam Sastriyar">
+        <option value="Mukul Kulkarni">
+        <option value="Mukul Shivputra">
+        <option value="Munawar Ali Khan">
+        <option value="Musharaff Moulamia Khan">
+        <option value="Musiri Subramania Iyer">
+        <option value="N. J. Nandini">
+        <option value="Naina Devi (singer)">
+        <option value="Nameirakpam Ibemni Devi">
+        <option value="Namrata Mohanty">
+        <option value="Nandini Srikar">
+        <option value="Narayanrao Bodas">
+        <option value="Nedunuri Krishnamurthy">
+        <option value="Neela Bhagwat">
+        <option value="Neelakantan Nambisan">
+        <option value="Neeta Sen">
+        <option value="Neyyattinkara Vasudevan">
+        <option value="Nilima Sen">
+        <option value="Nirmala Devi">
+        <option value="Nisa Azeezi">
+        <option value="Nisha Rajagopalan">
+        <option value="Nissar Hussain Khan">
+        <option value="Nithyasree Mahadevan">
+        <option value="Nookala Chinna Satyanarayana">
+        <option value="O. S. Thyagarajan">
+        <option value="Omkarnath Thakur">
+        <option value="P. A. Periyanayaki">
+        <option value="P. U. Chinnappa">
+        <option value="Padma Talwalkar">
+        <option value="Padmaja Phenany Joglekar">
+        <option value="Palghat Anantharama Bhagavatar">
+        <option value="Panchakshara Gawai">
+        <option value="Pandit Puranchandra">
+        <option value="Pankaj Udhas">
+        <option value="Pantula Rama">
+        <option value="Parameshwar Hegde">
+        <option value="Parassala B. Ponnammal">
+        <option value="Parignya Pandya Shah">
+        <option value="Parupalli Ramakrishnayya Pantulu">
+        <option value="Parveen Sultana">
+        <option value="Paul Poovathingal">
+        <option value="Pithukuli Murugadas">
+        <option value="Prabha Atre">
+        <option value="Prahlad Shinde">
+        <option value="Pran Nath (musician)">
+        <option value="Prasad Sawkar">
+        <option value="Prasun Banerjee (singer)">
+        <option value="Preeti Sagar">
+        <option value="Prem Lata Sharma">
+        <option value="Priya Sisters">
+        <option value="Priyadarshini (singer)">
+        <option value="Purshottam Das Jalota">
+        <option value="Pushkar Lele">
+        <option value="Puttur Narasimha Nayak">
+        <option value="Qurban Hussain Khan">
+        <option value="R. Suryaprakash">
+        <option value="Radha Jayalakshmi">
+        <option value="Radha Mangeshkar">
+        <option value="Radha Viswanathan">
+        <option value="Radhavallabh Chaturvedi">
+        <option value="Raghunandan Panshikar">
+        <option value="Raghunath Panigrahi">
+        <option value="Rahim Fahimuddin Dagar">
+        <option value="Rajanikanta Sen">
+        <option value="Rajeshwari Datta">
+        <option value="Rajkumar Shyamanand Sinha">
+        <option value="Rajshekhar Mansur">
+        <option value="Ram Chatur Mallick">
+        <option value="Ramdas Kamat">
+        <option value="Ramesh Vinayakam">
+        <option value="Ramkrishnabuwa Vaze">
+        <option value="Rani Varma">
+        <option value="Rani Vijaya Devi">
+        <option value="Ranjani Hebbar">
+        <option value="Ranjani–Gayatri">
+        <option value="Rasoolan Bai">
+        <option value="Ravi Kichlu">
+        <option value="Reba Som">
+        <option value="Reewa Rathod">
+        <option value="Richa Sharma (singer)">
+        <option value="Rita Dev">
+        <option value="Ritu Pathak">
+        <option value="Ritwik Sanyal">
+        <option value="Ruchira Panda">
+        <option value="Rudrapatnam Brothers">
+        <option value="S. J. Jananiy">
+        <option value="S. Janaki">
+        <option value="S. Rajam">
+        <option value="S. S. Mani Bhagavathar">
+        <option value="S. Sowmya">
+        <option value="Sadhana Sargam">
+        <option value="Saisharan">
+        <option value="Saketharaman">
+        <option value="Sakuntala Narasimhan">
+        <option value="Sampagodu Vighnaraja">
+        <option value="Samrat Pandit">
+        <option value="Sandeep Ranade">
+        <option value="Sandip Bhattacharjee">
+        <option value="Sangeetha Katti">
+        <option value="Sangmeshwar Gurav">
+        <option value="Sanhita Nandi">
+        <option value="Sankaran Embranthiri">
+        <option value="Santidev Ghosh">
+        <option value="Santosh Joshi">
+        <option value="Saraswati Rane">
+        <option value="Saraswati Vidyardhi">
+        <option value="Satinder Satti">
+        <option value="Sattur A. G. Subramaniam">
+        <option value="Satyasheel Deshpande">
+        <option value="Sawai Gandharva">
+        <option value="Selina Sharma">
+        <option value="Selma George">
+        <option value="Semmangudi Srinivasa Iyer">
+        <option value="Seshulatha Kosuru">
+        <option value="Shaan (singer)">
+        <option value="Shadkala Govinda Marar">
+        <option value="Shanno Khurana">
+        <option value="Sharafat Hussain Khan">
+        <option value="Sharda Sinha">
+        <option value="Shashwati Mandal">
+        <option value="Sheila Dhar">
+        <option value="Shobana Vignesh">
+        <option value="Shobha Gurtu">
+        <option value="Shounak Abhisheki">
+        <option value="Shrinivas Joshi">
+        <option value="Shripad Hegde">
+        <option value="Shruti Sadolikar">
+        <option value="Shubha Mudgal">
+        <option value="Siddheshwari Devi">
+        <option value="Sikkil Gurucharan">
+        <option value="Singh Bandhu">
+        <option value="Sipra Bose">
+        <option value="Sithara (singer)">
+        <option value="Siyaram Tiwari (musician)">
+        <option value="Smitha Madhav">
+        <option value="Sniti Mishra">
+        <option value="Som Dutt Battu">
+        <option value="Sombala Kumar">
+        <option value="Soolamangalam Sisters">
+        <option value="Srabani Sen">
+        <option value="Sreevalsan J. Menon">
+        <option value="Srimathumitha">
+        <option value="Sriram Parasuram">
+        <option value="Srivani Jade">
+        <option value="Subhra Guha">
+        <option value="Suchitra Mitra">
+        <option value="Sudha Ragunathan">
+        <option value="Sukhabodhananda">
+        <option value="Sulochana Brahaspati">
+        <option value="Sumitra Guha">
+        <option value="Sunanda Patnaik">
+        <option value="Sunitha Sarathy">
+        <option value="Sureshbabu Mane">
+        <option value="Sushila Rani Patel">
+        <option value="Suvra Mukherjee">
+        <option value="Swarn Noora">
+        <option value="T. M. Krishna">
+        <option value="T. M. Soundararajan">
+        <option value="T. M. Thiagarajan">
+        <option value="T. R. Rajakumari">
+        <option value="T. V. Gopalakrishnan">
+        <option value="T. V. Sankaranarayanan">
+        <option value="Tannishtha Chatterjee">
+        <option value="Tanvir Ahmed Khan">
+        <option value="Tarali Sarma">
+        <option value="Thrissur R. Vaidyanatha Bhagavathar">
+        <option value="Tirur Nambissan">
+        <option value="Trichur V. Ramachandran">
+        <option value="Tripti Mukherjee">
+        <option value="Tushar Dutta">
+        <option value="Uday Ramachandran">
+        <option value="Ulhas Kashalkar">
+        <option value="Uma Ramanan">
+        <option value="Upendra Bhat">
+        <option value="Usha Chinoy">
+        <option value="Usha Mangeshkar">
+        <option value="Ustad Bade Inayat Hussain Khan">
+        <option value="V. N. Sundaram">
+        <option value="V. R. Athavale">
+        <option value="Vaikom Saraswathi">
+        <option value="Vairamangalam Lakshmi Narayanan">
+        <option value="Vandana Srinivasan">
+        <option value="Vani Sateesh">
+        <option value="Varijashree Venugopal">
+        <option value="Vasantrao Deshpande">
+        <option value="Vedavalli">
+        <option value="Veena Sahasrabuddhe">
+        <option value="Veenai Dhanammal">
+        <option value="Venkatesh Kumar">
+        <option value="Vidya Rao">
+        <option value="Vidyadhar Vyas">
+        <option value="Vijay Kichlu">
+        <option value="Vijay Sardeshmukh">
+        <option value="Vijayalakshmy Subramaniam">
+        <option value="Vikas Kashalkar">
+        <option value="Vilayat Hussain Khan">
+        <option value="Vinay Chandra Maudgalya">
+        <option value="Vinayak Torvi">
+        <option value="Vinayakbuva Utturkar">
+        <option value="Vishakha Hari">
+        <option value="Vishnu Digambar Paluskar">
+        <option value="Vishnu Narayan Bhatkhande">
+        <option value="Yogini Joglekar">
+        <option value="Zeenat Begum">
+        <option value="Zila Khan">
+        <option value="Zohrabai">
+        <option value="Zohrabai Ambalewali">           
+    </datalist>
+{% endblock %}
